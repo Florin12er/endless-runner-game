@@ -13,11 +13,9 @@ export default class input {
         this.keys.indexOf(e.key) === -1
       ) {
         this.keys.push(e.key);
-        console.log(e.key, this.keys);
       }
     });
     window.addEventListener("keyup", (e) => {
-      console.log(e.key, this.keys);
       if (
         e.key === "s" ||
         e.key === "w" ||
@@ -28,7 +26,6 @@ export default class input {
       ) {
         this.keys.splice(this.keys.indexOf(e.key), 1);
       }
-      console.log(e.key, this.keys);
     });
   }
 }
