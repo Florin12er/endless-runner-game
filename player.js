@@ -6,13 +6,13 @@ export default class Player {
     this.width = 100;
     this.height = 91.3;
     this.x = 0;
-    this.y = this.game.height - this.height;
+    this.y = this.game.height - this.height - this.game.groundMargin;
     this.vy = 0;
     this.weight = 1;
     this.image = document.getElementById("dog_image");
     this.frameX = 0;
     this.frameY = 0;
-    this.maxFrame = 5;
+    this.maxFrame;
     this.speed = 0;
     this.maxSpeed = 5;
     this.fps = 20;
@@ -47,7 +47,7 @@ export default class Player {
       if (this.frameX < this.maxFrame) this.frameX++;
       else this.frameX = 0;
     } else {
-      this.frameTimer += 4.099999999999909;
+      this.frameTimer += 3.099999999999909;
     }
   }
   draw(ctx) {
@@ -64,7 +64,7 @@ export default class Player {
     );
   }
   onGround() {
-    return this.y >= this.game.height - this.height;
+    return this.y >= this.game.height - this.height - this.game.groundMargin;
   }
   setState(state) {
     this.currentState = this.states[state];
