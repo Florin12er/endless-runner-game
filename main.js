@@ -3,6 +3,7 @@ import input from "./input.js";
 import Player from "./player.js";
 import { backGround } from "./background.js";
 import { FlyingEnemy, ClimbingEnemy, GroundEnemy } from "./enemies.js";
+import { UI } from "./UI.js";
 
 window.addEventListener("load", () => {
   const canvas = document.getElementById("canvas1");
@@ -14,8 +15,12 @@ window.addEventListener("load", () => {
       this.groundMargin = 120;
       this.width = width;
       this.speed = 0;
+      this.score = 0;
+      this.UI = new UI(this);
       this.maxSpeed = 3;
+      this.maxParticles = 100;
       this.height = height;
+      this.particles = [];
       this.background = new backGround(this);
       this.player = new Player(this);
       this.input = new input();
@@ -23,6 +28,9 @@ window.addEventListener("load", () => {
       this.enemyTimer = 0;
       this.enemyInterval = 1000;
       this.markedForDeletion = false;
+      this.fontColor = "black";
+      this.player.currentState = this.player.states[0];
+      this.player.currentState.enter();
     }
     update(deltaTime) {
       this.background.update();
@@ -42,6 +50,14 @@ window.addEventListener("load", () => {
       });
       // check if off the screen
       if (this.x + this.width < 0) this.markedForDeletion = true;
+      //handle particles
+      this.particles.forEach((particle, index) => {
+        particle.update();
+        if (particle.markedForDeletion) this.particles.splice(index, 1);
+      });
+      if (this.particles.length > this.maxParticles) {
+        this.particles = this.particles.slice(0, this.maxParticles);
+      }
     }
     draw(ctx) {
       this.background.draw(ctx);
@@ -49,6 +65,10 @@ window.addEventListener("load", () => {
       this.enemies.forEach((enemy) => {
         enemy.draw(ctx);
       });
+      this.particles.forEach((particle) => {
+        particle.draw(ctx);
+      });
+      this.UI.draw(ctx);
     }
     addEnemy() {
       if (this.speed > 0 && Math.random() < 0.5)

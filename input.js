@@ -9,6 +9,7 @@ export default class input {
           e.key === "a" ||
           e.key === "d" ||
           e.key === " " ||
+          e.key === "Enter" ||
           e.key === "Control") &&
         this.keys.indexOf(e.key) === -1
       ) {
@@ -22,6 +23,7 @@ export default class input {
         e.key === "a" ||
         e.key === "d" ||
         e.key === " " ||
+        e.key === "Enter" ||
         e.key === "Control"
       ) {
         this.keys.splice(this.keys.indexOf(e.key), 1);
