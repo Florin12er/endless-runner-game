@@ -16,7 +16,7 @@ class Enemy {
       if (this.frameX < this.maxFrame) this.frameX++;
       else this.frameX = 0;
     } else {
-      this.frameTimer += 3.099999999999909;
+      this.frameTimer += 1.099999999999909;
     }
   }
   draw(ctx) {

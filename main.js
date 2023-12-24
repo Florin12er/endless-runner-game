@@ -16,11 +16,14 @@ window.addEventListener("load", () => {
       this.width = width;
       this.speed = 0;
       this.score = 0;
+      this.time = 0;
+      this.maxTime = 2000;
       this.UI = new UI(this);
       this.maxSpeed = 3;
       this.maxParticles = 100;
       this.height = height;
       this.particles = [];
+      this.colllisions = [];
       this.background = new backGround(this);
       this.player = new Player(this);
       this.input = new input();
@@ -33,6 +36,8 @@ window.addEventListener("load", () => {
       this.player.currentState.enter();
     }
     update(deltaTime) {
+      this.time += 3.999999999999909;
+      if (this.time > this.maxTime) this.gameOver = true;
       this.background.update();
       this.player.update(this.input.keys, deltaTime);
       // enemies
@@ -40,7 +45,7 @@ window.addEventListener("load", () => {
         this.addEnemy();
         this.enemyTimer = 0;
       } else {
-        this.enemyTimer += 2.599999999999909;
+        this.enemyTimer += 5.599999999999909;
       }
       this.enemies.forEach((enemy) => {
         enemy.update();
@@ -58,6 +63,11 @@ window.addEventListener("load", () => {
       if (this.particles.length > this.maxParticles) {
         this.particles = this.particles.slice(0, this.maxParticles);
       }
+      // handle collision
+      this.colllisions.forEach((collsion, index) => {
+        collsion.update();
+        if (collsion.markedForDeletion) this.colllisions.splice(index, 1);
+      });
     }
     draw(ctx) {
       this.background.draw(ctx);
@@ -67,6 +77,9 @@ window.addEventListener("load", () => {
       });
       this.particles.forEach((particle) => {
         particle.draw(ctx);
+      });
+      this.colllisions.forEach((collision) => {
+        collision.draw(ctx);
       });
       this.UI.draw(ctx);
     }
