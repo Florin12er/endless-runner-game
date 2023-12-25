@@ -40,7 +40,7 @@ export class Running extends State {
   }
   enter() {
     this.game.player.frameX = 0;
-    this.game.player.frameX = 8;
+    this.game.player.maxFrame = 8;
     this.game.player.frameY = 3;
   }
   handleInput(input) {
@@ -125,8 +125,8 @@ export class Rolling extends State {
       input.includes(" ") &&
       this.game.player.onGround()
     ) {
-      this.game.player.vy -= 33;
-    } else if (input.includes("s")) {
+      this.game.player.vy -= 37;
+    } else if (input.includes("s") && !this.game.player.onGround()) {
       this.game.player.setState(states.DIVING, 0);
     }
   }
@@ -177,10 +177,8 @@ export class Hit extends State {
   handleInput() {
     if (this.game.player.frameX >= 10 && this.game.player.onGround()) {
       this.game.player.setState(states.RUNNING, 1);
-      this.game.player.maxFrame = 6;
     } else if (this.game.player.frameX >= 10 && !this.game.player.onGround()) {
       this.game.player.setState(states.FALLING, 1);
-      this.game.player.maxFrame = 6;
     }
   }
 }

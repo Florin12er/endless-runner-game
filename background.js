@@ -112,6 +112,7 @@ export class backGround {
     });
     level2.addEventListener("click", () => {
       this.backgroundLayers = this.backgroundLayers2;
+      game.groundMargin = 40;
     });
   }
   update() {

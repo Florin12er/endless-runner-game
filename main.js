@@ -17,7 +17,7 @@ window.addEventListener("load", () => {
       this.speed = 0;
       this.score = 0;
       this.time = 0;
-      this.maxTime = 2000;
+      this.maxTime = 50000;
       this.UI = new UI(this);
       this.maxSpeed = 3;
       this.maxParticles = 100;
@@ -28,12 +28,14 @@ window.addEventListener("load", () => {
       this.player = new Player(this);
       this.input = new input();
       this.enemies = [];
+      this.gameOver = false;
       this.enemyTimer = 0;
       this.enemyInterval = 1000;
       this.markedForDeletion = false;
       this.fontColor = "black";
       this.player.currentState = this.player.states[0];
       this.player.currentState.enter();
+      this.lives = 5;
     }
     update(deltaTime) {
       this.time += 3.999999999999909;
@@ -61,7 +63,7 @@ window.addEventListener("load", () => {
         if (particle.markedForDeletion) this.particles.splice(index, 1);
       });
       if (this.particles.length > this.maxParticles) {
-        this.particles = this.particles.slice(0, this.maxParticles);
+        this.particles.length = this.maxParticles;
       }
       // handle collision
       this.colllisions.forEach((collsion, index) => {
@@ -98,7 +100,7 @@ window.addEventListener("load", () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     game.update(deltaTime);
     game.draw(ctx);
-    requestAnimationFrame(animate);
+    if (!game.gameOver) requestAnimationFrame(animate);
   }
   animate();
 });
