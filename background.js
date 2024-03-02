@@ -30,7 +30,7 @@ class Layer {
 export class backGround {
   constructor(game) {
     this.game = game;
-    this.width = 1920;
+    this.width = 1921;
     this.height = 760;
     // level 1
     this.layer1image = document.getElementById("layer6");
